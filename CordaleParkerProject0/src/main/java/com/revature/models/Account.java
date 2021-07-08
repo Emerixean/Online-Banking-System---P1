@@ -74,9 +74,9 @@ public class Account {
 
 	@Override
 	public String toString() {
-		return "Account [accountNumber=" + accountNumber + ", customerId=" + customerId + ", accountBalance="
+		return "Account: " + accountNumber + ", customerId= " + customerId + ", accountBalance="
 				+ accountBalance + ", accountType=" + accountType + ", accountApproved=" + accountApproved
-				+ ", approvedBy=" + approvedBy + "]";
+				+ ", approvedBy=" + approvedBy + "\n";
 	}
 	
 }

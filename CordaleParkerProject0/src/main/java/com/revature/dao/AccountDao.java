@@ -3,6 +3,7 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.models.Account;
+import com.revature.models.Employee;
 
 public interface AccountDao {
 	
@@ -20,7 +21,7 @@ public interface AccountDao {
 	Account selectAccountByAccountNumber(String accountNumber);
 	
 	//Update
-	boolean updateAccountApproval(boolean b,int accountNumber);
+	boolean updateAccountApproval(boolean b,String accountNumber, Employee e);
 	boolean updateAccountBalance(double amount, String accountNumber);
 	
 	//Delete

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.revature.models.Customer;
-
+import com.revature.models.Employee;
 import com.revature.util.ConnectionFactory;
 
 public class CustomerDaoImpl implements CustomerDao {
@@ -290,13 +290,14 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
-	public boolean updateCustomerApproval(boolean b, int customerId) {
-		String sql ="update customer_table set account_approved = ? where customer_id = ? ;";
+	public boolean updateCustomerApproval(boolean b, int customerId, Employee employee) {
+		String sql ="update customer_table set account_approved = ? , approved_by =? where customer_id = ? ;";
 		
 		try(Connection conn = ConnectionFactory.getConnection();){
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setBoolean(1, b);
-			ps.setInt(2, customerId);
+			ps.setString(2, employee.getFirstName());
+			ps.setInt(3, customerId);
 			ps.execute();
 			
 		}catch(SQLException e) {

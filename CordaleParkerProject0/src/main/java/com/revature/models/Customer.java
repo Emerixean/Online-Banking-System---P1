@@ -68,15 +68,13 @@ public class Customer {
 	}
 
 
-
-
+	public void setId(int id) {
+		this.id= id;
+	}
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -200,8 +198,7 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [Id="+ id +", firstName=" + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth
-				+ ", city=" + city + ", state=" + state + ", country=" + country + "]";
+		return "Customer: " + firstName + " " + lastName + " Id: "+ id + " |date of birth: " + dateOfBirth + "  |Approved: " + accountApproved +"\n";
 	}
 
 

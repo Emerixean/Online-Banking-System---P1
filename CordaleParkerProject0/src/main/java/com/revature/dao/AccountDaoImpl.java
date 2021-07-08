@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.revature.models.Account;
 import com.revature.models.Customer;
+import com.revature.models.Employee;
 import com.revature.util.ConnectionFactory;
 
 public class AccountDaoImpl implements AccountDao {
@@ -227,13 +228,14 @@ public class AccountDaoImpl implements AccountDao {
 	}
 
 	@Override
-	public boolean updateAccountApproval(boolean b, int accountNumber) {
-		String sql ="update customer_accounts set account_approved = ? where account_number = ? ;";
+	public boolean updateAccountApproval(boolean b, String accountNumber, Employee employee) {
+		String sql ="update customer_accounts set account_approved = ? , approved_by = ? where account_number = ? ;";
 		
 		try(Connection conn = ConnectionFactory.getConnection();){
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setBoolean(1, b);
-			ps.setInt(2, accountNumber);
+			ps.setString(2, employee.getFirstName());
+			ps.setString(3, accountNumber);
 			ps.execute();
 			
 		}catch(SQLException e) {

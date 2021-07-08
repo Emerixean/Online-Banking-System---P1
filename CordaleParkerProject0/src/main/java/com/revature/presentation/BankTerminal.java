@@ -3,58 +3,79 @@ package com.revature.presentation;
 import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
-
 import com.revature.dao.AccountDao;
 import com.revature.dao.AccountDaoImpl;
 import com.revature.dao.CustomerDao;
 import com.revature.dao.CustomerDaoImpl;
 import com.revature.models.Account;
 import com.revature.models.Customer;
-import com.revature.service.BankManager;
-import com.revature.service.BankManagerImpl;
+import com.revature.models.Employee;
+import com.revature.service.AccountHandler;
+import com.revature.service.CustomerHandler;
+import com.revature.service.EmployeeHandler;
+import com.revature.service.TransactionHandler;
+
 
 public class BankTerminal {
 	
+	TransactionHandler tH;
+	CustomerHandler cH;
+	AccountHandler aH;
+	EmployeeHandler eH;
+	
 
-	BankManagerImpl bM;
 	Scanner sc = new Scanner(System.in);
 	
-	public BankTerminal(BankManagerImpl bankManager) {
-		this.bM = bankManager;
+	
+	//Constructor
+	public BankTerminal(TransactionHandler tH, CustomerHandler cH, AccountHandler aH, EmployeeHandler eH) {
+
+		this.tH= tH;
+		this.cH= cH;
+		this.aH= aH;
+		this.eH= eH;
 	}
 	
 
+	
+	/*This is the display Menu
+	 * All users will end up here when they first interact with the system
+	 * After finishing their business they will be returned here again
+	 */
 	public void displayWelcomeMenu() {
 		boolean validInput = false;
 		String input = null;
 		while(validInput == false) {
 
 		
-		System.out.println("Welcome to Revature Bank!");
-		System.out.println("Press 1 if you are a customer: ");
-		System.out.println("Press 2 if you are an employee: ");
+		System.out.println("Welcome to Revature Bank!\n"
+							+ "Press 1 if you are a customer\n"
+							+ "Press 2 if you are an employee\n");   //Separate the users from the employee's
+
 		
 		input = sc.nextLine();
 		
 		if(input.equals("1") || input.equals("2")) {
 		validInput = true;
 			}
-		else {System.out.println("Please enter a valid option.");}
+		
+		else {System.out.println("Please enter a valid option.\n\n");}
 		}
+		
 		switch(input) {
 		case "1":
 			this.customerWelcomeMenu();
 			break;
 		case "2":
-			//this.employeeMenu();
+			this.employeeLoginMenu();
 			break;
 		default:
-			System.out.println("Invalid option recieved. Exiting program!");
+			System.out.println("Invalid option recieved. Exiting program!\n\n\n");
 		}
 	}
 
 
-	
+	//Customer Menus
 	private void customerWelcomeMenu() {
 		
 		boolean validInput = false;
@@ -68,7 +89,7 @@ public class BankTerminal {
 		
 		System.out.println("Thank you for banking with Revature Bank!\n"
 				+ "Press 1 if you are an existing customer.\n"
-				+ "Press 2 if you want to create a new account. ");
+				+ "Press 2 if you want to create a new account. \n");
 		
 		input = sc.nextLine();
 		
@@ -76,7 +97,7 @@ public class BankTerminal {
 
 		validInput = true;
 			}
-		else {System.out.println("Please enter a valid option.");
+		else {System.out.println("Please enter a valid option.\n\n");
 			}
 		}
 		
@@ -98,20 +119,23 @@ public class BankTerminal {
 
 		
 		while(validLogin == false) {
-		System.out.println("Please input your account name: ");
+		System.out.println("Please input your account name: \n");
 		
 		accountName = sc.nextLine();
 		
-		System.out.println("Please input your password: ");
+		System.out.println("Please input your password: \n");
 		
 		accountPassword = sc.nextLine();
 		
-		if(this.bM.authenticateCustomer(accountName, accountPassword) == true) {
+		if(this.cH.authenticateCustomer(accountName, accountPassword) == true) {
 			
-			customer = bM.retrieveCustomerInformation(accountName,accountPassword);
+			customer = cH.retrieveCustomerInformation(accountName,accountPassword);
 			validLogin = true;
 			this.customerActionMenu(customer);
+			}else {
+				System.out.println("Please try again\n");
 			}
+				
 
 		}
 	}
@@ -127,7 +151,6 @@ public class BankTerminal {
 		String transfer;
 		
 		while(userActive == true) {
-		System.out.println("Made it to action menu!");
 		System.out.println("Press 1 to view your accounts\n"
 							+ "Press 2 to view your account balance\n"
 							+ "Press 3 to apply for a new bank account\n"
@@ -142,7 +165,7 @@ public class BankTerminal {
 			switch(input) {
 			
 			case "1":
-				customerAccounts= bM.retrieveCustomerAccounts(c.getId());
+				customerAccounts= aH.retrieveCustomerAccounts(c.getId());
 				
 				for(Account a:customerAccounts) {
 					System.out.println(a);
@@ -154,9 +177,9 @@ public class BankTerminal {
 				
 				input = sc.nextLine();
 				
-				if(bM.checkNumberValid(input)) {
+				if(tH.checkNumberValid(input)) {
 					
-				bankAccount = bM.retrieveCustomerAccount(input , c);
+				bankAccount = aH.retrieveCustomerAccount(input , c);
 				if(bankAccount == null) {
 					System.out.println("Invalid account selected\n\n");
 					break;
@@ -171,7 +194,7 @@ public class BankTerminal {
 
 				System.out.println("Please enter starting balance\n ");
 				input = sc.nextLine();
-				if(bM.checkNumberValid(input)) {
+				if(tH.checkNumberValid(input)) {
 					System.out.println("Press 1 for savings\n"
 										+ "Press 2 for checkings\n");
 					
@@ -179,7 +202,7 @@ public class BankTerminal {
 					
 					if(accountType.equals("1") || accountType.equals("2")) {
 						
-						bM.applyForAccount(input,accountType,c.getId());
+						aH.applyForAccount(input,accountType,c.getId());
 							}
 					
 						else {System.out.println("Please enter a valid option.");
@@ -192,9 +215,9 @@ public class BankTerminal {
 					System.out.println("Please enter account number");
 					input = sc.nextLine();
 					
-					if(bM.checkNumberValid(input)) {
+					if(tH.checkNumberValid(input)) {
 						
-						bankAccount = bM.retrieveCustomerAccount(input, c);
+						bankAccount = aH.retrieveCustomerAccount(input, c);
 						
 						if(bankAccount == null) {
 							System.out.println("Could not select account!");
@@ -203,8 +226,8 @@ public class BankTerminal {
 						
 						input = sc.nextLine();
 						
-						if(bM.checkNumberValid(input)) {
-							if(bM.depositCustomerAccount(input,bankAccount)== false) {
+						if(tH.checkNumberValid(input)) {
+							if(tH.depositCustomerAccount(input,bankAccount)== false) {
 								System.out.println("Could not make deposit!");
 								}
 							}
@@ -216,19 +239,19 @@ public class BankTerminal {
 				System.out.println("Please enter account number");
 				input = sc.nextLine();
 				
-				if(bM.checkNumberValid(input)) {
+				if(tH.checkNumberValid(input)) {
 					
-					bankAccount = bM.retrieveCustomerAccount(input,c);
+					bankAccount = aH.retrieveCustomerAccount(input,c);
 					
 					if(bankAccount ==null) {
 						System.out.println("Could not access account!");
 					}else {
-					System.out.println("Please enter withdraw amount with numbers only: ");
+					System.out.println("Please enter withdrawl amount with numbers only: ");
 					
 					input = sc.nextLine();
 					
-					if(bM.checkNumberValid(input)) {
-						if (bM.withdrawCustomerAccount(input,bankAccount) == false) {
+					if(tH.checkNumberValid(input)) {
+						if (tH.withdrawCustomerAccount(input,bankAccount) == false) {
 							System.out.println("Could not make withdraw!");
 							}
 						}
@@ -241,19 +264,19 @@ public class BankTerminal {
 					System.out.println("Please enter the account number you wish to withdraw from ");
 					input = sc.nextLine();
 					
-					if(bM.checkNumberValid(input)) {
-						bankAccount = bM.retrieveCustomerAccount(input,c);
+					if(tH.checkNumberValid(input)) {
+						bankAccount = aH.retrieveCustomerAccount(input,c);
 						if(bankAccount ==null) {
 							System.out.println("Could not access account!");
 							break;
 						}else {
 							System.out.println("Please enter the account number you wish to deposit to ");
 							input = sc.nextLine();
-							if(bM.checkNumberValid(input)) {
+							if(tH.checkNumberValid(input)) {
 								System.out.println("Enter amount to transfer:");
 								transfer = sc.nextLine();
-								if(bM.checkNumberValid(transfer)) {
-									if(bM.makeTransfer(bankAccount, input, transfer) == false) {
+								if(tH.checkNumberValid(transfer)) {
+									if(tH.makeTransfer(bankAccount, input, transfer) == false) {
 										System.out.println("Transfer could not be processed!\nPlease check if your account is approved, you have enough funds,"
 												+ " and you are transferring to a valid account number.");
 									}
@@ -301,7 +324,7 @@ public class BankTerminal {
 		
 		accountPassword = sc.nextLine();
 		
-		if(bM.authenticateCustomer(accountName, accountPassword)) {
+		if(cH.authenticateCustomer(accountName, accountPassword)) {
 			System.out.println("Username already taken. Try again.");
 		}else {
 		
@@ -325,6 +348,14 @@ public class BankTerminal {
 		System.out.println("Please enter your date of birth YYYY-MM-DD");
 		
 		dateOfBirth = sc.nextLine();
+		
+		try {
+			Date.valueOf(dateOfBirth);
+		}catch(IllegalArgumentException e) {
+			
+			System.out.println("Please enter a valid date of birth. \n");
+			this.displayWelcomeMenu();
+		}
 		
 		System.out.println("Please enter your address (street number and name of street)");
 		
@@ -351,7 +382,7 @@ public class BankTerminal {
 		postalCode = sc.nextLine();
 
 		
-		if(bM.makeNewCustomerLogin(accountName, accountPassword,firstName, lastName, phoneNumber, email, dateOfBirth, address, apartment, city, state, country, postalCode)== false) {
+		if(cH.makeNewCustomerLogin(accountName, accountPassword,firstName, lastName, phoneNumber, email, dateOfBirth, address, apartment, city, state, country, postalCode)== false) {
 			System.out.println("Could not create user account!");
 		}else {
 			userLoginAvailable = true;
@@ -360,10 +391,204 @@ public class BankTerminal {
 		this.displayWelcomeMenu();
 		}
 		
-		//create all the inputs for customer fields
-		
-		//this.displayWelcomeMenu();
 		}
 	
+	}
+
+	
+	//Employee Menus
+	private void employeeLoginMenu() {
+		String accountName = null;
+		String accountPassword = null;
+		boolean validLogin = false;
+		Employee employee;
+		
+
+		
+		while(validLogin == false) {
+		System.out.println("Please input your account name: ");
+		
+		accountName = sc.nextLine();
+		
+		System.out.println("Please input your password: ");
+		
+		accountPassword = sc.nextLine();
+		
+		if(this.eH.authenticateEmployee(accountName, accountPassword) == true) {
+			
+			employee = eH.retrieveEmployeeInformation(accountName,accountPassword);
+			validLogin = true;
+			this.employeeActionMenu(employee);
+			}
+
+		}
+	}
+	
+	private void employeeActionMenu(Employee e) {
+		System.out.println(e);
+		String input;
+		String accountType;
+		boolean userActive = true;
+		boolean validInput = false;
+		List<Account> customerAccounts;
+		List<Customer> customerProfiles;
+		Account bankAccount;
+		Customer customer;
+		String transfer;
+		
+		while(userActive == true) {
+		System.out.println("Press 1 to view all customers\n"
+							+ "Press 2 to view a customer\n"
+							+ "Press 3 to view a customer's account(s)\n"
+							+ "Press 4 to enter approval mode\n"
+							+ "Press 0 to exit\n");
+
+			
+			input = sc.nextLine();
+			
+			switch(input) {
+			
+			case "1":
+				customerProfiles= cH.retrieveAllCustomers();
+				
+				for(Customer c:customerProfiles) {
+					System.out.println(c);
+				}
+				break;
+				
+			case "2":
+				System.out.println("Enter customer id: \n");
+				
+				input = sc.nextLine();
+				
+				if(tH.checkNumberValid(input)) {
+					int tempId = Integer.parseInt(input);
+				customer = cH.retrieveCustomer(tempId);
+				if(customer == null) {
+					System.out.println("Invalid customer ID entered\n\n");
+					break;
+				}
+				System.out.println(customer);
+				}
+				else {System.out.println("Invalid input\n\n");
+				}
+				break;
+				
+			case "3":
+
+				System.out.println("Enter customer id: \n");
+				
+				input = sc.nextLine();
+				
+				if(tH.checkNumberValid(input)) {
+					
+					int customerId= Integer.parseInt(input);
+					customerAccounts = aH.retrieveCustomerAccounts(customerId);
+					
+					if(customerAccounts != null) {
+						
+							for(Account a: customerAccounts) {
+								System.out.println(a);
+							}
+						
+							}
+					
+						else {System.out.println("Please enter a valid customer ID.\n\n");
+							}
+					}
+
+				break;
+				
+			case "4":
+					System.out.println("Press 1 for customers\n"
+										+ "Press 2 for customer accounts\n");
+					
+					input = sc.nextLine();
+											
+					if(input.equals("1")) {
+							
+						System.out.println("Enter customer id: \n");
+							
+						input = sc.nextLine();
+							
+						if(tH.checkNumberValid(input)) {
+							
+							int tempId = Integer.parseInt(input);
+							customer = cH.retrieveCustomer(tempId);
+								
+							if(customer == null) {
+								System.out.println("Invalid customer ID entered\n\n");
+								break;
+							}
+							
+							System.out.println(customer);
+							
+							System.out.println("Press 1 to approve customer\n"
+												+ "Press 2 to deny customer\n");
+							
+							input = sc.nextLine();
+							
+							if(input.equals("1")) {
+								cH.approveCustomer(customer, e);
+								
+							}
+							else if(input.equals("2")) {
+								cH.denyCustomer(customer, e);
+								
+							}else {
+								System.out.println("Invalid selection\n\n");
+								}
+							}
+						}
+					
+					if(input.equals("2")) {
+						
+						System.out.println("Enter account number: \n");
+						
+						input = sc.nextLine();
+							
+						bankAccount = aH.retrieveAccount(input);
+						
+						if(bankAccount == null) {
+							System.out.println("Account not found \n\n");
+							break;
+						}
+						
+						customer = cH.retrieveCustomer(bankAccount.getCustomerId());
+						
+						System.out.println(customer);
+						System.out.println(bankAccount);
+						
+						System.out.println("Press 1 to approve account\n"
+											+ "Press 2 to deny account\n"
+											+ "Approving an account will automatically approve the customer as well\n");
+						
+						input = sc.nextLine();
+						
+						if(input.equals("1")) {
+							
+							cH.approveCustomer(customer, e);
+							aH.approveAccount(bankAccount, e);
+						}
+						else if(input.equals("2")) {
+							
+							aH.denyAccount(bankAccount, e);
+							
+						}else {
+							
+							System.out.println("Invalid selcetion\n\n");
+						}
+					}							
+				break;
+
+			case "0":
+				userActive = false;
+				break;
+			default:
+				System.out.println("Please select a valid option\n\n");
+			}
+	
+	}
+		this.displayWelcomeMenu();
 	}
 }

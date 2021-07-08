@@ -3,6 +3,7 @@ package com.revature.dao;
 import java.util.List;
 
 import com.revature.models.Customer;
+import com.revature.models.Employee;
 
 public interface CustomerDao {
 
@@ -20,7 +21,7 @@ public interface CustomerDao {
 	Customer selectCustomerByLogin(String accountName, String accountPassword);
 	
 	//Update
-	boolean updateCustomerApproval(boolean b,int customerId);
+	boolean updateCustomerApproval(boolean b,int customerId, Employee e);
 	boolean updateCustomer(Customer c);
 	
 	//Delete
