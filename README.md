@@ -31,5 +31,5 @@ Approved customer's will be able to enjoy the benefits of banking with Revature.
 
 
 
-### Technical Details
+##### Technical Details
 This program follows the Three-Tier Architecture design pattern. To enable persistence of data, a database is used to store customer, employee, and bank account data.
