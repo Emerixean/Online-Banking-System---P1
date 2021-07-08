@@ -40,15 +40,17 @@ public class AccountHandler {
 		return aDao.selectAccountByCustomerId(id);
 	}
 	
-	public void applyForAccount(String balance, String type, int id) {
+	public boolean applyForAccount(String balance, String type, Customer c) {
 		boolean accountCreated = false;
 		Account newAccount;
-		
+		if(c.isAccountApproved() == false) {
+			return false;
+		}
 		while(accountCreated == false) {
 		newAccount = new Account();
 		newAccount.setAccountNumber((int)(Math.random()* 1000000));
 		newAccount.setAccountBalance(Double.parseDouble(balance));
-		newAccount.setCustomerId(id);
+		newAccount.setCustomerId(c.getId());
 		newAccount.setAccountApproved(false);
 		newAccount.setApprovedBy(null);
 		if(type.equals("1")) {
@@ -61,6 +63,7 @@ public class AccountHandler {
 			accountCreated = true;
 		}
 		}
+		return true;
 	}
 	
 

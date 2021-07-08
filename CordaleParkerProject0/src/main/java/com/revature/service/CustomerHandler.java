@@ -89,9 +89,9 @@ public class CustomerHandler {
 		}
 		
 		try {
-			cDao.updateCustomerApproval(false, c.getId(), employee);
+			cDao.deleteCustomer(c);
 			
-			loggy.info(employee.getFirstName() + " denied customer " + c.getFirstName() + " ID : "+c.getId()+ " \n" );
+			loggy.info(employee.getFirstName() + " denied customer " + c.getFirstName() + " ID : "+c.getId()+ " \n Customer data purged" );
 			return true;
 		}catch(Exception e) {
 			return false;

@@ -120,7 +120,7 @@ public class BankTerminal {
 
 		
 		while(validLogin == false) {
-		System.out.println("Please input your account name: \n");
+		System.out.println("Please input your username: \n");
 		
 		accountName = sc.nextLine();
 		
@@ -201,7 +201,7 @@ public class BankTerminal {
 				
 			case "3":
 
-				System.out.println("Please enter starting balance\n ");
+				System.out.println("Please enter starting balance. (numbers only)\n ");
 				input = sc.nextLine();
 				if(tH.checkNumberValid(input)) {
 					System.out.println("Press 1 for savings\n"
@@ -211,7 +211,11 @@ public class BankTerminal {
 					
 					if(accountType.equals("1") || accountType.equals("2")) {
 						
-						aH.applyForAccount(input,accountType,c.getId());
+						if(aH.applyForAccount(input,accountType,c) == true) {
+							System.out.println(" Account was created!\n");
+						}else {
+							System.out.println("Can not apply for an account until you are approved!\n");
+						}
 							}
 					
 						else {System.out.println("Please enter a valid option.");
@@ -328,7 +332,7 @@ public class BankTerminal {
 		boolean userLoginAvailable = false;
 		
 		while(userLoginAvailable == false) {
-		System.out.println("Please input your account name: ");
+		System.out.println("Please input your username name: ");
 		
 		accountName = sc.nextLine();
 				
@@ -419,7 +423,7 @@ public class BankTerminal {
 
 		
 		while(validLogin == false) {
-		System.out.println("Please input your account name: ");
+		System.out.println("Please input your username: ");
 		
 		accountName = sc.nextLine();
 		
@@ -488,7 +492,7 @@ public class BankTerminal {
 					System.out.println("Invalid customer ID entered\n\n");
 					break;
 				}
-				System.out.println(customer);
+				System.out.println(customer.displayAll());
 				}
 				else {System.out.println("Invalid input\n\n");
 				}
@@ -541,7 +545,7 @@ public class BankTerminal {
 								break;
 							}
 							
-							System.out.println(customer);
+							System.out.println(customer.displayAll());
 							
 							System.out.println("Press 1 to approve customer\n"
 												+ "Press 2 to deny customer\n");

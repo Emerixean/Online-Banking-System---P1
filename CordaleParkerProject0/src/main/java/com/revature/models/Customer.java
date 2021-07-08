@@ -201,7 +201,10 @@ public class Customer {
 		return "Customer: " + firstName + " " + lastName + " Id: "+ id + " |date of birth: " + dateOfBirth + "  |Approved: " + accountApproved +"\n";
 	}
 
-
+	public String displayAll() {
+		return "Customer: " + firstName + " " + lastName + " Id: "+ id + " |date of birth: " + dateOfBirth + "  |Email: " + email +"\n"
+				+ " Phone number: "+ phoneNumber+" |Address: " + address + " |City: " + city +"\n";
+	}
 
 	
 }
