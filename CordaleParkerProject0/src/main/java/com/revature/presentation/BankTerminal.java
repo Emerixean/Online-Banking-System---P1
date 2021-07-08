@@ -113,6 +113,7 @@ public class BankTerminal {
 	private void customerLoginMenu() {
 		String accountName = null;
 		String accountPassword = null;
+		String input = null;
 		boolean validLogin = false;
 		Customer customer;
 		
@@ -133,7 +134,16 @@ public class BankTerminal {
 			validLogin = true;
 			this.customerActionMenu(customer);
 			}else {
-				System.out.println("Please try again\n");
+				System.out.println("Would you like to try again? (y/n)\n");
+				input = sc.nextLine();
+				if(input.equalsIgnoreCase("n")) {
+					this.displayWelcomeMenu();
+				}else if(input.equalsIgnoreCase("y")){
+					System.out.println("Try again\n");
+				}else {
+					System.out.println("Try again\n");
+				}
+					
 			}
 				
 
@@ -145,7 +155,6 @@ public class BankTerminal {
 		String input;
 		String accountType;
 		boolean userActive = true;
-		boolean validInput = false;
 		List<Account> customerAccounts;
 		Account bankAccount;
 		String transfer;
@@ -235,6 +244,7 @@ public class BankTerminal {
 					}
 					
 				break;
+				
 			case "5":
 				System.out.println("Please enter account number");
 				input = sc.nextLine();
@@ -285,20 +295,22 @@ public class BankTerminal {
 						}
 					}
 				break;
+				
 			case "0":
 				userActive = false;
 				break;
+				
 			default:
 				System.out.println("Please select a valid option\n");
 			}
 	
-	}
+		}
 		this.displayWelcomeMenu();
 	}
 
 	private void newCustomerMenu() {
 			
-		int id;
+
 		String firstName;
 		String lastName;
 		String accountName = null;
@@ -400,6 +412,7 @@ public class BankTerminal {
 	private void employeeLoginMenu() {
 		String accountName = null;
 		String accountPassword = null;
+		String input = null;
 		boolean validLogin = false;
 		Employee employee;
 		
@@ -419,22 +432,29 @@ public class BankTerminal {
 			employee = eH.retrieveEmployeeInformation(accountName,accountPassword);
 			validLogin = true;
 			this.employeeActionMenu(employee);
+			}else {
+				System.out.println("Would you like to try again? (y/n)\n");
+				input = sc.nextLine();
+				if(input.equalsIgnoreCase("n")) {
+					this.displayWelcomeMenu();
+				}else if(input.equalsIgnoreCase("y")){
+					System.out.println("Try again\n");
+				}else {
+					System.out.println("Try again\n");
+				}
 			}
-
 		}
 	}
 	
 	private void employeeActionMenu(Employee e) {
 		System.out.println(e);
 		String input;
-		String accountType;
 		boolean userActive = true;
-		boolean validInput = false;
 		List<Account> customerAccounts;
 		List<Customer> customerProfiles;
 		Account bankAccount;
 		Customer customer;
-		String transfer;
+
 		
 		while(userActive == true) {
 		System.out.println("Press 1 to view all customers\n"
