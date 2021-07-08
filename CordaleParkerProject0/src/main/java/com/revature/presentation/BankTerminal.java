@@ -213,14 +213,12 @@ public class BankTerminal {
 						
 						if(aH.applyForAccount(input,accountType,c) == true) {
 							System.out.println(" Account was created!\n");
-						}else {
+						}else if(aH.applyForAccount(input,accountType,c) == false){
 							System.out.println("Can not apply for an account until you are approved!\n");
 						}
+							}else {System.out.println("Please enter a valid option.");
 							}
-					
-						else {System.out.println("Please enter a valid option.");
-							}
-					}
+					}else {System.out.println("Please enter a valid option.");}
 
 				break;
 				
@@ -266,7 +264,7 @@ public class BankTerminal {
 					
 					if(tH.checkNumberValid(input)) {
 						if (tH.withdrawCustomerAccount(input,bankAccount) == false) {
-							System.out.println("Could not make withdraw!");
+							System.out.println("Could not make withdrawl!");
 							}
 						}
 					}

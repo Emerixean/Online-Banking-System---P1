@@ -29,6 +29,7 @@ public class TransactionHandler {
 		double transferAmount = Double.parseDouble(amount);
 
 		if(a.getAccountBalance()< transferAmount) {
+			loggy.warn("Account number " + a.getAccountNumber() + " tried to transfer without enough funds"+ "\n");
 			return false;
 		}
 		if(a.isAccountApproved() == false|| b.isAccountApproved() == false) {
