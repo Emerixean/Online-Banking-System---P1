@@ -554,10 +554,14 @@ public class BankTerminal {
 							
 							if(input.equals("1")) {
 								cH.approveCustomer(customer, e);
+								System.out.println("Customer was approved!\n");
+								break;
 								
 							}
 							else if(input.equals("2")) {
 								cH.denyCustomer(customer, e);
+								System.out.println("Customer was denied! Account deleted!\n");
+								break;
 								
 							}else {
 								System.out.println("Invalid selection\n\n");

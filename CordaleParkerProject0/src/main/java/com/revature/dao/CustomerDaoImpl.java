@@ -344,11 +344,14 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public boolean deleteCustomer(Customer c) {
+		int id = c.getId();
 		String sql ="delete from customer_table where customer_id = ?;";
 		
 		try(Connection conn = ConnectionFactory.getConnection();){
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1 , c.getId());
+			ps.setInt(1 , id);
+			
+			ps.execute();
 		}catch(SQLException e) {
 			
 		}

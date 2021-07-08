@@ -94,6 +94,7 @@ public class CustomerHandler {
 			loggy.info(employee.getFirstName() + " denied customer " + c.getFirstName() + " ID : "+c.getId()+ " \n Customer data purged" );
 			return true;
 		}catch(Exception e) {
+			e.printStackTrace();
 			return false;
 			}
 		}
