@@ -1,50 +1,64 @@
 package com.revature.service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-
+import com.revature.dao.AccountDaoImpl;
 import com.revature.dao.CustomerDaoImpl;
 import com.revature.models.Customer;
 import com.revature.models.Employee;
 
+import io.javalin.http.Context;
+
 public class CustomerHandler {
 
-	CustomerDaoImpl cDao;
+	private CustomerDaoImpl cDao;
+;
 	
 	final static Logger loggy = Logger.getLogger("GLOBAL");
 	
-	public CustomerHandler(CustomerDaoImpl cDao) {
-		this.cDao = cDao;
 
+	
+	
+	
+	public CustomerHandler() {
+		this.cDao = new CustomerDaoImpl();
 	}
 	
-	public boolean makeNewCustomerLogin(String accountName, String accountPassword,String firstName,
-			String lastName,String phoneNumber,String email,String dateOfBirth,
-			String address,String apartment,String city,String state,String country,String postalCode){
+	public CustomerHandler(CustomerDaoImpl cDao) {
+		this.cDao = cDao;
+	}
+	
+	public boolean makeNewCustomerLogin(Context ctx){
 		Customer newCustomer = new Customer();
 		
-		newCustomer.setAccountName(accountName);
-		newCustomer.setAccountPassword(accountPassword);
-		newCustomer.setFirstName(firstName);
-		newCustomer.setLastName(lastName);
-		newCustomer.setPhoneNumber(phoneNumber);
-		newCustomer.setEmail(email);
-		newCustomer.setDateOfBirth(dateOfBirth);
-		newCustomer.setAddress(address);
-		newCustomer.setApartment(apartment);
-		newCustomer.setCity(city);
-		newCustomer.setState(state);
-		newCustomer.setCountry(country);
-		newCustomer.setPostalCode(postalCode);
+		newCustomer.setAccountName(ctx.formParam("username"));
+		newCustomer.setAccountPassword(ctx.formParam("password"));
+		newCustomer.setFirstName(ctx.formParam("firstName"));
+		newCustomer.setLastName(ctx.formParam("lastName"));
+		newCustomer.setPhoneNumber(ctx.formParam("phoneNumber"));
+		newCustomer.setEmail(ctx.formParam("email"));
+		newCustomer.setDateOfBirth(ctx.formParam("dateOfBirth"));
+		newCustomer.setAddress(ctx.formParam("address"));
+		newCustomer.setApartment(ctx.formParam("apartment"));
+		newCustomer.setCity(ctx.formParam("city"));
+		newCustomer.setState(ctx.formParam("state"));
+		newCustomer.setCountry(ctx.formParam("country"));
+		newCustomer.setPostalCode(ctx.formParam("postalCode"));
 		try {
 			cDao.insertCustomer(newCustomer);
 		}catch(Exception e) {
 			
 			return false;
 		}
+		ctx.redirect("welcome-menu.html");
 		return true;
 	}
 	
@@ -138,4 +152,22 @@ public class CustomerHandler {
 		return databaseCustomers;
 		
 	}
+	
+	public List<Customer> retrieveAllUnapprovedCustomers(){
+		List<Customer> databaseCustomers = new ArrayList<>();
+		
+		try {
+			databaseCustomers = this.cDao.selectAllUnapproved();	
+		} catch(Exception e) {
+			
+		}
+		return databaseCustomers;
+		
+	}
+	
+
+	
+
+	
+
 }

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Menu</title>
+</head>
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel ="stylesheet"  href="EmployeeStylesheet.css">
+<body>
+<img src="bg-image.jpg" id="bg" alt="">
+<script src="employee-portal.js"></script>
+
+    <ul class ="navBar">
+      <li><a class="active" >Revature Bank</a></li>
+        <li><a href="accounts-home.html">Accounts</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li style="float: right;"><a href="/logout">Logout</a></li>
+      </ul>
+<div style="display:flex; margin-left: 36%;">
+<div>
+      <div style="padding:20px;margin-top:30px;">
+      <h3 style="margin-top: 10%;">Bank Accounts</h3>
+    </div>
+<div>
+    <form action="accountApproval" method="POST">
+        <div class="form-group">
+            
+            
+            <select style ="margin-top: 10%;"  name="type" id="type">
+                <option value="true">Approve</option>
+                <option value="false">Deny</option>
+            </select>
+
+            <input type="text" class="form-control" placeholder = "Account Number" name="accountNumber">
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+
+</div>
+<div >
+      <div style="padding:20px;margin-top:25px;">
+      <h3 style="margin-top: 10%;">Customer Accounts</h3>
+    </div>
+<div>
+    <form action="customerApproval" method="POST">
+        <div class="form-group">
+            
+            
+            <select style ="margin-top: 10%;"  name="type" id="type">
+                <option value="true">Approve</option>
+                <option value="false">Deny</option>
+            </select>
+
+            <input type="text" class="form-control" placeholder = "Customer ID" name="customerId">
+
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+</div>
+</div>
+          <table  id= "account-table" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Account Number</th>
+            <th scope="col">Type</th>
+            <th scope="col">Balance</th>
+
+
+          </tr>
+        </thead>
+        <tbody id ="account-data">
+        
+        </tbody>
+       </table>
+
+       <br><br>
+       <table  id= "customer-table" class="table">
+        <thead>
+          <tr>
+            <th scope="col">Customer ID</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone Number</th>
+
+          </tr>
+        </thead>
+        <tbody id ="customer-data">
+        
+        </tbody>
+       </table>
+<div>GET table of unapproved customers/ accounts with the buttons (JS)
+    the approve and deny buttons will be appened through JS</div>
+
+
+         
+
+
+</body>
+</html>

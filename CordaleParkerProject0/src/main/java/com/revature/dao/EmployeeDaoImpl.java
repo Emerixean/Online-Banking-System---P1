@@ -39,4 +39,33 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		return e;
 	}
+	
+	
+	@Override
+	public Employee selectEmployeeByEmployeeId(int id) {
+		Employee e = null;
+		String sql ="select * from employee_table where employee_id = ?";
+		try (Connection conn = ConnectionFactory.getConnection();){
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1,id);
+			
+			ResultSet rs =ps.executeQuery();
+			rs.next();
+			e = new Employee(
+					rs.getInt("employee_id"),
+					rs.getString("first_name"),
+					rs.getString("last_name"),
+					rs.getString("account_name"),
+					rs.getString("account_password")
+
+					);
+			
+					
+		}catch(SQLException exc) {
+			exc.printStackTrace();
+
+		}
+
+		return e;
+	}
 }

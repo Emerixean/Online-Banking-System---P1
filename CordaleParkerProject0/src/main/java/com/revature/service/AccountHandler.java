@@ -9,14 +9,20 @@ import com.revature.models.Account;
 import com.revature.models.Customer;
 import com.revature.models.Employee;
 
+import io.javalin.http.Context;
+
 
 
 public class AccountHandler {
 
 	
-	AccountDaoImpl aDao;
+	private AccountDaoImpl aDao;
 	
 	final static Logger loggy = Logger.getLogger("GLOBAL");
+	
+	public AccountHandler() {
+		this.aDao = new AccountDaoImpl();
+	}
 	
 	public AccountHandler(AccountDaoImpl aDao) {
 		this.aDao = aDao;
@@ -33,11 +39,15 @@ public class AccountHandler {
 			return null;
 		}
 		
-		return aDao.selectAccountByAccountNumber(accountNumber);
+		return account;
 	}
 	
 	public List<Account> retrieveCustomerAccounts(int id){
 		return aDao.selectAccountByCustomerId(id);
+	}
+	
+	public List<Account> retrieveAllUnapprovedAccounts(){
+		return aDao.selectAllUnapproved();
 	}
 	
 	public boolean applyForAccount(String balance, String type, Customer c) {
@@ -58,11 +68,36 @@ public class AccountHandler {
 		} else if (type.equals("2")) {
 			newAccount.setAccountType("CHECKINGS");
 			}
-		System.out.println(newAccount);
 		if( aDao.insertAccount(newAccount) == true) {
 			accountCreated = true;
 		}
 		}
+		return true;
+	}
+	
+	public boolean applyForAccount( Context ctx) {
+		boolean accountCreated = false;
+		Account newAccount;
+		if((boolean)ctx.cookieStore("approved") == false) {
+			ctx.status(405);
+			return false;
+		}
+		
+		while(accountCreated == false) {
+		newAccount = new Account();
+		newAccount.setAccountNumber((int)(Math.random()* 1000000));
+		newAccount.setAccountBalance(Double.valueOf(ctx.formParam("balance")));
+		newAccount.setCustomerId((Integer)ctx.cookieStore("customerId"));
+		newAccount.setAccountApproved(false);
+		newAccount.setApprovedBy(null);
+		newAccount.setAccountType(ctx.formParam("type"));
+
+		if( aDao.insertAccount(newAccount) == true) {
+			accountCreated = true;
+		}
+		}
+		ctx.status(201);
+		ctx.redirect("accounts-home.html");
 		return true;
 	}
 	
