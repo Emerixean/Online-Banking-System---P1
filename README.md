@@ -1,24 +1,28 @@
 # Banking-Project
 
 
-## Purpose
-​
-   We want to see that you can meet deadlines and that you can code. You are expected to complete the following requirements and give a 5 minute presentation of your project to our QC team.
-​​
-## Requirements
-1. Functionality should reflect the below user stories.
-2. Data is stored in a database.
-3. A custom stored procedure is called to perform some portion of the functionality.
-4. Data Access is performed through the use of JDBC in a data layer consisting of Data Access Objects.
-5. All input is received using the java.util.Scanner class.
-6. Log4j is implemented to log events to a file.
-7. A minimum of 10 JUnit test is written to test some functionality.
+## Minimum Technical Requirements
 
+•	The front-end view will use JavaScript and AJAX to call server-side components. The web pages should look **presentable** (utilizing a combination of CSS and Bootstrap)
+
+•	Project code and package as to be appropriately structured (no spaghetti code) and utilize appropriate design patterns.
+
+•	All tables must be in at least 3rd Normal Form.
+
+•	The back-end system shall use JDBC to connect to a PostgreSQL database.
+
+•	Logging has to be implemented, utilizing an external logging framework (e.g. Log4J)
+
+•	Unit test coverage, utilizing Mockito and JUnit
+
+## Stretch Goal (Optional requirements)
+
+•	The application will send an email to customers letting them know that their account has been approved 
 
 
 ## Description
 ​
-   The Bank app is a console-based application that simulates banking operations. A customer can apply for an account, view their balance, and make withdrawals and deposits. An employee can approve or deny accounts and view account balances for their customers.
+   The Bank app is a browser-based application that simulates banking operations. A customer can apply for an account, view their balance, and make withdrawals and deposits. An employee can approve or deny customers and accounts.
 
 
 
@@ -33,4 +37,4 @@ Approved customer's will be able to enjoy the benefits of banking with Revature.
 
 
 ##### Technical Details
-This program follows the Three-Tier Architecture design pattern. To enable persistence of data, a database is used to store customer, employee, and bank account data.
+This program follows the Three-Tier Architecture design pattern. To enable persistence of data, a database is used to store customer, employee, and bank account data. The frontend of the system is designed using HTML, Javascript, and Javalin to allow an enchanced user experience.
