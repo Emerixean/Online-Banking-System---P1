@@ -114,15 +114,17 @@ public class AccountHandler {
 	
 	public boolean denyAccount(Account a, Employee employee) {
 		if(a ==null) {
+			System.out.println("a was null");
 			return false;
+
 		}
-		String accountNumber = String.valueOf(a.getAccountNumber());
+
 		try {
-			aDao.updateAccountApproval(false, accountNumber, employee);
-			
-			loggy.info(employee.getFirstName() + " denied customer account" + a.getAccountNumber() +" \n" );
+			aDao.deleteAccount(a);
+			loggy.info(employee.getFirstName() + " denied customer account" + a.getAccountNumber() +" account purged. \n" );
 			return true;
 		}catch(Exception e) {
+			e.printStackTrace();
 			return false;
 			}
 		}

@@ -16,12 +16,12 @@ import com.revature.service.TransactionHandler;
 
 import io.javalin.http.Context;
 
-public class AccountControllerImpl {
+public class AccountControllerImpl implements AccountController {
 
 	private AuthControllerImpl authController = new AuthControllerImpl();
 	private AccountServiceImpl accService = new AccountServiceImpl();
 
-	
+	@Override
 	public void getCustomerAccounts(Context ctx) {
 		if(authController.checkUser(ctx)) {
 
@@ -38,7 +38,8 @@ public class AccountControllerImpl {
 		}
 	}
 	
-public void getAllUnapprovedAccounts(Context ctx){
+	@Override
+	public void getAllUnapprovedAccounts(Context ctx){
 	if(authController.checkUser(ctx)) {
 
 		ctx.status(200);
@@ -54,6 +55,7 @@ public void getAllUnapprovedAccounts(Context ctx){
 	}
 }
 	
+	@Override
 	public void withdrawAccount(Context ctx) {
 		if(authController.checkUser(ctx)) {
 		ObjectMapper om = new ObjectMapper();
@@ -82,6 +84,7 @@ public void getAllUnapprovedAccounts(Context ctx){
 		}
 	}
 	
+	@Override
 	public void depositAccount(Context ctx) {
 		if(authController.checkUser(ctx)) {
 		ObjectMapper om = new ObjectMapper();
@@ -110,7 +113,7 @@ public void getAllUnapprovedAccounts(Context ctx){
 	}
 	}
 	
-	
+	@Override
 	public void transferAccount(Context ctx) {
 		if(authController.checkUser(ctx)) {
 		ObjectMapper om = new ObjectMapper();	
@@ -139,6 +142,7 @@ public void getAllUnapprovedAccounts(Context ctx){
 
 	}
 	
+	@Override
 	public void applyForAccount(Context ctx) {
 		if(accService.checkNumberValid((String)ctx.formParam("balance")) == false){
 			ctx.status(406);
@@ -146,6 +150,7 @@ public void getAllUnapprovedAccounts(Context ctx){
 		}else { accService.applyForAccount(ctx);}
 	}
 	
+	@Override
 	public void updateAccountApproval(Context ctx) {
 		if(authController.checkUser(ctx)) {
 			
@@ -153,13 +158,14 @@ public void getAllUnapprovedAccounts(Context ctx){
 			Account a = accService.retrieveAccount(ctx.formParam("accountNumber"));
 			
 			boolean approval = Boolean.valueOf(ctx.formParam("type"));
-			
+
 			if(approval == true) {
 				accService.approveAccount(a, e);
 				ctx.status(200);
 				ctx.redirect("employee-portal.html");
 				
 			}else if(approval == false) {
+				System.out.println("Deny was recognized");
 				accService.denyAccount(a, e);
 				ctx.status(200);
 				ctx.redirect("employee-portal.html");

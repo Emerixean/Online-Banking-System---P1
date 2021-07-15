@@ -3,16 +3,15 @@ package com.revature.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.models.Account;
+
 import com.revature.models.Customer;
 import com.revature.models.Employee;
 import com.revature.service.AuthServiceImpl;
-import com.revature.service.CustomerHandler;
-import com.revature.service.EmployeeHandler;
+
 
 import io.javalin.http.Context;
 
-public class AuthControllerImpl {
+public class AuthControllerImpl implements AuthController {
 
 private AuthServiceImpl authService = new AuthServiceImpl(); 
 	
@@ -40,6 +39,7 @@ private AuthServiceImpl authService = new AuthServiceImpl();
 		
 	}
 	
+	@Override
 	public void employeeLogin(Context ctx) {
  
 		
@@ -65,12 +65,14 @@ private AuthServiceImpl authService = new AuthServiceImpl();
 		}
 	}
 	
+	@Override
 	public void logout(Context ctx) {
 		ctx.clearCookieStore();
 		ctx.redirect("welcome-menu.html");
 		
 	}
 	
+	@Override
 	public boolean checkUser(Context ctx) {
 		if(authService.validateToken(ctx.cookieStore("user"))){
 			return true;
@@ -81,10 +83,13 @@ private AuthServiceImpl authService = new AuthServiceImpl();
 		
 
 	}
+	
+	@Override
 	public void createCustomerAccount(Context ctx) {
 		authService.createNewCustomer(ctx);
 	}
 	
+	@Override
 	public void getAllUnaprovedCustomers(Context ctx) {
 		if(this.checkUser(ctx)) {
 
@@ -101,6 +106,7 @@ private AuthServiceImpl authService = new AuthServiceImpl();
 		}
 	}
 	
+	@Override
 	public void updateCustomerApproval(Context ctx) {
 		if(this.checkUser(ctx)) {
 			Employee e = authService.retrieveEmployeeById(ctx.cookieStore("id"));

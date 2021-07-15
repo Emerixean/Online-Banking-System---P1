@@ -264,12 +264,20 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public boolean deleteAccount(Account a) {
+		System.out.println("SQL WAS CALLED");
+		String accNum = String.valueOf(a.getAccountNumber());
 		String sql ="delete from customer_accounts where account_number = ?;";
 		
 		try(Connection conn = ConnectionFactory.getConnection();){
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setInt(1 , a.getAccountNumber());
+
+			ps.setString(1 , accNum);
+
+
+			ps.execute();
+			System.out.println("Delete WAS executed");
 		}catch(SQLException e) {
+
 			
 		}
 		return true;

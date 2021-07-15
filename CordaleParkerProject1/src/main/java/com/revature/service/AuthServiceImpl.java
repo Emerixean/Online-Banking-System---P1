@@ -16,6 +16,7 @@ import io.javalin.http.Context;
 public class AuthServiceImpl {
 	private CustomerHandler custHandler = new CustomerHandler();
 	private EmployeeHandler empHandler = new EmployeeHandler();
+	private EmailHandler emailHandler = new EmailHandler();
 	private static Map<String, String> tokenRepo = new HashMap<>();
 	private static byte[] salt = new SecureRandom().getSeed(16);
 	
@@ -109,6 +110,7 @@ public class AuthServiceImpl {
 		if(approval == true) {
 			System.out.println("approval recognized");
 			custHandler.approveCustomer(c, e);
+			try{emailHandler.sendEmail(c);}catch(Exception exc) {exc.printStackTrace();}
 			ctx.status(200);
 			ctx.redirect("employee-portal.html");
 			
