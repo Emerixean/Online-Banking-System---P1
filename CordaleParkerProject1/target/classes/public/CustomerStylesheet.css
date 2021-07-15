@@ -20,6 +20,11 @@ ul {
   width: 100%;
 }
 
+#menu-button{
+  width: 30%;
+margin-top: 5%;
+}
+
 li {
   float: left;
 }

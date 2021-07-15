@@ -1,7 +1,7 @@
 const url = "account";
  
 window.onload = function(){
-	console.log("Inside onload function!");
+
 	grabAccounts();
     grabCustomers();
 
@@ -35,11 +35,10 @@ function grabAccounts(){
 				console.log(xhr.status)
 				
 				if(xhr.status == 200){
-					console.log(xhr.responseText);
 					
 					let accountList = JSON.parse(xhr.responseText);
 					
-					console.log(accountList);
+
 					
 					accountList.forEach(
 						element => {
@@ -83,14 +82,14 @@ function grabCustomers(){
 				console.log("awaiting request");
 				break;
 			case 4: 
-				console.log(xhr.status)
+
 				
 				if(xhr.status == 200){
-					console.log(xhr.responseText);
+
 					
 					let accountList = JSON.parse(xhr.responseText);
 					
-					console.log(accountList);
+	
 					
 					accountList.forEach(
 						element => {

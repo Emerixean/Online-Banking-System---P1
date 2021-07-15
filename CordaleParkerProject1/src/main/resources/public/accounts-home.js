@@ -1,7 +1,6 @@
 const url = "account";
  
 window.onload = function(){
-	console.log("Inside onload function!");
 	grabAccounts();
 
 }
@@ -33,7 +32,6 @@ function withdraw(){
 				console.log("awaiting request");
 				break;
 			case 4: 
-				console.log(xhr.status)
 				
 				if(xhr.status == 200){
 					resetTable();
@@ -209,9 +207,9 @@ function transfer(){
 	let xhr = new XMLHttpRequest();
 	
 	let accountNumber = document.getElementById("accountNumber").value;
-	console.log()
+
 	let accountNumber2 = document.getElementById("accountNumber2").value;
-		console.log()
+
 	let amount = document.getElementById("amount").value;
 	
 	xhr.onreadystatechange = function(){
@@ -269,8 +267,23 @@ function transfer(){
 				let attachPoint = document.getElementById("input-field");
 				
 				attachPoint.appendChild(errorMessage);
-				}				
+				}	
+				if(xhr.status == 404){
 				
+				let oldMessage = document.getElementById("error");
+				
+				if(oldMessage){
+				oldMessage.remove();
+				}
+				
+				let errorMessage = document.createElement("p");
+				errorMessage.setAttribute("id","error");
+				errorMessage.innerHTML = "Account does not exist";
+				
+				let attachPoint = document.getElementById("input-field");
+				
+				attachPoint.appendChild(errorMessage);
+				}	
 
 		}
 		
@@ -284,7 +297,6 @@ function transfer(){
 	transaction.accountNumber = accountNumber;
 	transaction.accountNumber2 = accountNumber2;
 	transaction.amount = amount;
-	console.log(transaction);
 	xhr.send(
 		JSON.stringify(transaction)
 	);
@@ -318,11 +330,10 @@ function grabAccounts(){
 				console.log(xhr.status)
 				
 				if(xhr.status == 200){
-					console.log(xhr.responseText);
+
 					
 					let accountList = JSON.parse(xhr.responseText);
 					
-					console.log(accountList);
 					
 					accountList.forEach(
 						element => {
