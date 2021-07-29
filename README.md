@@ -6,7 +6,7 @@
    
    Revature Bank is a banking application for anyone to use that also has management views for customers and employees. Login to view transactions, credit card information, and account information, as well as creating new transactions, credit cards, and accounts. Managers need to approve new accounts and credit cards, and they also have the ability to freeze and unfreeze any account. Customers can deposit, withdraw and manage accounts such as checking, savings and view transaction history. Manager can view list of customers and search any customer based on transaction id, customer name and account number.
 
-##Technologies Used
+## Technologies Used
 -Java  version- 8
 -Javalin version- 3.13.9
 -PostgreSQL version- 42.2.18
@@ -32,7 +32,7 @@ To-do:
 - Implement user feedback when invalid input is given
 - Implement forwarding
 
-#Getting Started
+# Getting Started
 Using a git-based terminal such as gitbash, first navigate to the directoy where you'd like to clone the repository
 
 For Windows
@@ -73,7 +73,7 @@ $ cd /home/user/my_project
   
   For Unix systems you will need to find proper online guides to create the same system variables.
   
-  ##Usage
+  ## Usage
   Once you have your system ready, you can compile and run the program with your IDE or compiler of choice.
   
   Once you have the program running open a web browser of your choice and connect to the local host:
