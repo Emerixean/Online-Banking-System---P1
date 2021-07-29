@@ -1,0 +1,34 @@
+create table customer_table(
+	customer_id serial primary key,
+	first_name varchar(30) not null,
+	last_name varchar(30),
+	account_name varchar(30) unique not null,
+	account_password varchar(30) not null,
+	phone_number varchar(15),
+	email varchar(60) not null,
+	date_of_birth date,
+    address varchar(60),
+    apartment varchar(30),
+    city varchar(30),
+    state varchar(30),
+    country varchar(30),
+    postal_code varchar(10),
+    account_approved boolean,
+    approved_by varchar(30)
+);
+create table customer_accounts(
+	account_number varchar(10) primary key,
+	customer_id int references customer_table(customer_id),
+	account_balance numeric(10,2),
+	account_type varchar(10),
+    account_approved boolean,
+    approved_by varchar(30)
+)
+
+create table employee_table(
+	employee_id int primary key,
+	first_name varchar(30),
+	last_name varchar(30),
+	account_name varchar(30) unique not null,
+	account_password varchar(30) not null
+);

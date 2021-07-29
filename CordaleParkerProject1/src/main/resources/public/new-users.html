@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Menu</title>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+<link rel ="stylesheet"  href="NewCustomer.css">
+<body>
+<img src="bg-image.jpg" id="bg" alt="">
+    <ul class ="navBar">
+      <li><a class="active" >Revature Bank</a></li>
+        <li><a href="accounts-home.html">Accounts</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li style="float: right;"><a href="/customer-login.html">Login</a></li>
+      </ul>
+      <div style="padding:20px;margin-top:30px;">
+      <h1 style="margin-top: 10%;">Please enter your information</h1>
+      <h7><em> **Yellow fields are required **</em></h7>
+    </div>
+
+    <div class = "formFields">
+    <form action="createCustomer" method="POST">
+        <div class="form-group">
+            <input type="text" class="form-control"  placeholder = "First Name"  required name="firstName">
+            <input type="text" class="form-control" placeholder = "Last Name" name="lastName">
+            <input type="text" class="form-control"  placeholder = "Username" required name="username">
+            <input type="text" class="form-control"  placeholder = "Password" required name="password">
+            <input type="tel" class="form-control" placeholder = "Phone Number" pattern="[0-9]{11}" required name="phoneNumber">
+            <input type="email" class="form-control"  placeholder = "Email"  required name="email">
+            <input type="date" class="form-control" placeholder = "Date of Birth" required name="dateOfBirth">
+            <input type="text" class="form-control" placeholder = "Address" name="address">
+            <input type="text" class="form-control" placeholder = "Apartment Number" name="apartment">
+            <input type="text" class="form-control" placeholder = "City" name="city">
+            <input type="text" class="form-control" placeholder = "State" name="state">
+            <input type="text" class="form-control" placeholder = "Country" name="country">
+            <input type="text" class="form-control" placeholder = "Postal Code" name="postalCode">
+        <button type="submit" class="btn btn-primary">Apply!</button>
+        </div>
+    </div>
+    </form>
+    
+    <div>
+        <button style ="background:none; border: none; "><a href ="/new-users.html">Create new account</a></button>
+    </div>
+</body>
+</html>
