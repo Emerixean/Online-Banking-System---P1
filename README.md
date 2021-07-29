@@ -7,28 +7,28 @@
    Revature Bank is a banking application for anyone to use that also has management views for customers and employees. Login to view transactions, credit card information, and account information, as well as creating new transactions, credit cards, and accounts. Managers need to approve new accounts and credit cards, and they also have the ability to freeze and unfreeze any account. Customers can deposit, withdraw and manage accounts such as checking, savings and view transaction history. Manager can view list of customers and search any customer based on transaction id, customer name and account number.
 
 ## Technologies Used
--Java  version- 8
--Javalin version- 3.13.9
--PostgreSQL version- 42.2.18
--Mockito version-  1.9.3
--Javax Mail version- 2.5.0-b01
--Log4j version- 1.2.17
--Junit version- 4.13.1
--JavaScript
--HTML 5
+- Java  version- 8
+- Javalin version- 3.13.9
+- PostgreSQL version- 42.2.18
+- Mockito version-  1.9.3
+- Javax Mail version- 2.5.0-b01
+- Log4j version- 1.2.17
+- Junit version- 4.13.1
+- JavaScript
+- HTML 5
 
 ## Features
--Responsive HTML/JavaScript user-interface
--Ability for customers to apply for accounts, deposit or withdraw money, transfer money, or view accounts
--Ability for employees to approve or reject customer accounts
--Abiltiy for employees to view transaction logs via a file
--Cookie validation for user sessions
--Input validation for application robustness
--Persistant Storage via PostgreSQL database
--Unit testing for business logic
+- Responsive HTML/JavaScript user-interface
+- Ability for customers to apply for accounts, deposit or withdraw money, transfer money, or view accounts
+- Ability for employees to approve or reject customer accounts
+- Abiltiy for employees to view transaction logs via a file
+- Cookie validation for user sessions
+- Input validation for application robustness
+- Persistant Storage via PostgreSQL database
+- Unit testing for business logic
 
 To-do:
--Implement ability for employees to view full details regarding a customer
+- Implement ability for employees to view full details regarding a customer
 - Implement user feedback when invalid input is given
 - Implement forwarding
 
